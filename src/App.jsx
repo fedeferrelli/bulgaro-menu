@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-
+import { doc, onSnapshot, collection } from "firebase/firestore";
+import {db} from './firebase/firebase'
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 
 import { fetchData } from "./api";
@@ -13,8 +14,16 @@ function App() {
   const [categories, setCategoies] = useState();
 
   const getData = async () => {
-    const dataApi = await fetchData.fetchMenuData();
-    setData(dataApi);
+
+   onSnapshot(collection(db, "platos"), (querySnapshot) => {
+      let cities = []
+        querySnapshot.forEach((doc) => {
+          cities.push(doc.data());
+        });
+        
+       setData(cities)
+    
+    })
   };
 
   const getCategories = async () => {

@@ -7,20 +7,26 @@ import {
   setDoc,
   deleteDoc,
   updateDoc,
-} from "firebase/firestore/lite";
+  onSnapshot,
+} from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-const db = getFirestore(app);
+export const db = getFirestore(app);
 export const storage = getStorage(app);
 
 // Get a list of platos from the database
-export async function getDishes() {
-  const dishes = collection(db, "platos");
-  const dishesSnapshot = await getDocs(dishes);
-  const dishesList = dishesSnapshot.docs.map((doc) => doc.data());
-  return dishesList;
-}
+/* export async function getDishes() {
+  onSnapshot(collection(db, "platos"), (querySnapshot) => {
+    //let cities = [];
+    const cities = querySnapshot.map((doc) => {
+      doc.data();
+    });
+
+    const ciudades = [...cities];
+    return ciudades;
+  });
+} */
 
 export async function getCategories() {
   const categories = collection(db, "categorias");
@@ -49,7 +55,6 @@ export async function eliminarPlato(id) {
 // funcion para modificar stock
 export async function modificarStock(id, newValue) {
   const itemRef = doc(db, "platos", id);
-  console.log(newValue)
 
   await updateDoc(itemRef, {
     existencia: !newValue,

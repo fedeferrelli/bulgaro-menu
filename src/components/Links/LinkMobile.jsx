@@ -37,7 +37,7 @@ function LinkMobile({ dish, handlePrice }) {
               {dish.descripcion.length > 30 ? "..." : null}
             </p>
 
-            {!dish.existencia ? <div className="mt-2 rounded-full px-3 py-2 bg-gray-800 text-gray-200 text-center font-normal w-[120px] flex justify-center items-center">
+            {!dish.existencia ? <div className="mt-2 rounded-full px-3 py-2 bg-gray-800 text-gray-200 text-center font-normal w-[120px]">
               <span className="">sin stock</span></div> : null}
             
           </div>

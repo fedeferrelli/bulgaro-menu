@@ -26,9 +26,9 @@ function ShowTestDetail({ data }) {
     return "$" + Number(string).toLocaleString("de-DE");
   };
 
-  console.log(selectedDish.existencia);
   const handleDelete = () => {
     setShowDeleteItem(true);
+   
   };
 
   const handleChangeStock = () => {
@@ -58,12 +58,16 @@ function ShowTestDetail({ data }) {
             stock={selectedDish.existencia}
             plato={selectedDish.plato}
             setShowChangeStock={setShowChangeStock}
+            
           />
         </div>
       )}
 
       <div className="w-full ">
-        <div className="">
+        <div className="relative">
+        {!selectedDish?.existencia && <div className="absolute top-0 bottom-0 left-0 right-0 bg-main/80 flex">
+          <h1 className="bg-red-500 capitalize h-auto flex m-auto py-3 px-4 text-center  rounded-full ">sin stock</h1>
+          </div>}
           <img
             className=""
             src={selectedDish?.image}
@@ -71,26 +75,29 @@ function ShowTestDetail({ data }) {
             alt={`imagen para ${selectedDish?.title}`}
           ></img>{" "}
         </div>
-        <div className="p-2 w-full ">
+        <div className="p-2 w-full">
+          <section className="flex flex-row justify-left gap-4">
           <h1 className="text-2xl text-left capitalize font-semibold text-text">
             {" "}
-            {selectedDish.plato}
+            {selectedDish?.plato} 
           </h1>
+          
+          </section>
           <div className="flex justify-left">
             <div className="rounded-full bg-gray-200 w-auto text-gray-400 px-2 py-1 text-sm">
               {" "}
-              {selectedDish.categoria}{" "}
+              {selectedDish?.categoria}{" "}
             </div>{" "}
           </div>
 
           <h1 className="text-2xl font-bold text-left capitalize text-text mt-3">
             {" "}
-            {handlePrice(selectedDish.precio)}
+            {handlePrice(selectedDish?.precio)}
           </h1>
 
           <p className="text-left text-description mt-2 text-md max-w-prose">
             {" "}
-            {selectedDish.descripcion}
+            {selectedDish?.descripcion}
           </p>
 
           <div
@@ -99,7 +106,7 @@ function ShowTestDetail({ data }) {
               handleChangeStock(selectedDish.id, selectedDish.existencia)
             }
           >
-            {selectedDish.existencia ? "Sacar de Stock" : "Agregar a Stock"}
+            {selectedDish?.existencia ? "Sacar de Stock" : "Agregar a Stock"}
           </div>
 
           <div
