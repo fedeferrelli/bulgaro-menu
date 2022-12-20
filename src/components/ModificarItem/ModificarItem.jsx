@@ -1,48 +1,66 @@
-import React, { useState, useEffect, useId } from "react";
+import React, { useState, useEffect } from "react";
+
+import { fetchData } from "../../api";
+
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import { setItem, uploadImage } from "../../firebase/firebase";
+import { modificarItem, uploadImage } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
-//import FileUploader from "react-firebase-file-uploader";
 import _ from "lodash";
-import { v4 as uuid } from "uuid";
 
 import Loading from "../Loading";
 
-const AddItem = ({ categories }) => {
-  // states para las imagenes
+const ModificarItem = ({ dish, setShowModificarPlato }) => {
 
-  
-  const [cargandoItem, setCargandoItem] = useState(false);
-  const [urlimagen, setUrlimagen] = useState("");
+ const {plato, image, id, categoria, existencia, descripcion, precio, ubicacion, tags} = dish;
+
+ const [categories, setCategories] = useState([]) 
+ const [cargandoItem, setCargandoItem] = useState(false);
+  const [urlimagen, setUrlimagen] = useState(image);
   const [errorImg, setErrorImg] = useState(false);
   const [cargandoImagen, setCargandoImagen] = useState(false);
   const [categorias, setCategorias] = useState([]);
 
-  const id = uuid();
+  const getCategories = async () => {
+    const categoriesApi = await fetchData.fetchCategories();
+    setCategories(
+      categoriesApi
+        .sort((a, b) => {
+          return +a.posicion > +b.posicion ? 1 : -1;
+        })
+        .map((cat) => cat.nueva_categoria)
+    );
+  };
+
+  useEffect(() => {
+   
+    getCategories();
+  }, []);
+
 
   // obtener datos de categorias
 
-  useEffect(() => {
+  /* useEffect(() => {
     const establecerCategories = () => {
       setCategorias(categories);
     };
 
     categories && establecerCategories();
-  }, [categories]);
+  }, [categories]); */
 
   // validacion y leer datos de formulario
 
   const formik = useFormik({
     initialValues: {
-      plato: "",
-      categoria: "",
-      ubicacion: "",
-      descripcion: "",
-      precio: "",
-      tags: "",
+      plato: plato,
+      categoria: categoria,
+      ubicacion: ubicacion,
+      descripcion: descripcion,
+      precio: precio,
+      tags: tags,
+      image: image
     },
 
     validationSchema: Yup.object({
@@ -70,11 +88,11 @@ const AddItem = ({ categories }) => {
     onSubmit: (plato) => {
       try {
         if (urlimagen) {
-          plato.existencia = true;
-          plato.id = id;
           plato.image = urlimagen;
+          plato.existencia= existencia;
+          plato.id = id;
           //setCargandoItem(true)
-          uploadData(plato);
+          uploadData(id, plato);
           formik.resetForm();
         } else setErrorImg(true);
       } catch (error) {
@@ -83,13 +101,12 @@ const AddItem = ({ categories }) => {
     },
   });
 
-  const uploadData = async (data) => {
+  const uploadData = async (id, data) => {
     
-    console.log(cargandoItem)
-    await setItem(data);
+    await modificarItem(id, data);
     setCargandoItem(false)
     console.log(cargandoItem)
-    navigate("/");
+    setShowModificarPlato(false);
   };
 
   // Todo sobre las imagenes
@@ -243,10 +260,10 @@ const AddItem = ({ categories }) => {
                 <option value="" className="bg-slate-200 shadow-none">
                   Seleccione una categoría{" "}
                 </option>
-                {categorias.map((categoria) => (
+                {categories.map((categoria) => (
                   <option
                     key={Math.random()}
-                    value={categoria.nueva_categoria}
+                    value={categoria}
                     className="bg-slate-200 text-black capitalize"
                   >
                     {categoria}{" "}
@@ -349,12 +366,12 @@ const AddItem = ({ categories }) => {
             <input
               type="submit"
               className=" w-full h-12 rounded-full px-6 py-2 mt-8 bg-green-700 font-bold uppercase text-white hover:bg-green-800 cursor-pointer"
-              value="agregar plato"
+              value="modificar plato"
             />
 
             <button
               className=" w-full h-12 rounded-full px-6 py-2 mt-4 bg-red-700 font-bold uppercase text-white hover:bg-red-800 cursor-pointer"
-              onClick={() => navigate("/")}
+              onClick={() => setShowModificarPlato(false)}
             >
               {" "}
               cancelar{" "}
@@ -366,4 +383,4 @@ const AddItem = ({ categories }) => {
   );
 };
 
-export default AddItem;
+export default ModificarItem;

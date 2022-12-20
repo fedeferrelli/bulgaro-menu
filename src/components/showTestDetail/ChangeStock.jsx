@@ -8,7 +8,7 @@ function ChangeStock({id, plato, stock, setShowChangeStock, setShowLoading}) {
         setShowLoading(true)
         modificarStock(id, stock);
         setShowChangeStock(false)
-        //setShowLoading(false)
+        
     }
 
     return (

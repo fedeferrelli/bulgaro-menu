@@ -7,7 +7,7 @@ function AddItemButton() {
     return (
         <Link to = '/add_plato'>
             <div
-        className="rounded-full bg-violet-500 shadow-xl text-center text-white left-3 bottom-3 fixed border border-gray-300/80 flex sm:hover:cursor-pointer"
+        className="rounded-full bg-violet-500 shadow-xl text-center text-white left-3 bottom-3 fixed border border-violet-700/80 flex sm:hover:cursor-pointer"
         >
         <span className="w-full m-auto rounded-full p-4 text-2xl">
           {" "}

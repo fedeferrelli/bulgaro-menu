@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../Loading";
 import DeleteItem from "./DeleteItem";
 import ChangeStock from "./ChangeStock";
+import ModificarItem from "../ModificarItem/ModificarItem"
 
 function ShowTestDetail({ data }) {
   const { dish } = useParams();
@@ -11,10 +12,11 @@ function ShowTestDetail({ data }) {
   const [showLoading, setShowLoading] = useState(true);
   const [showDeleteItem, setShowDeleteItem] = useState(false);
   const [showChangeStock, setShowChangeStock] = useState(false);
+  const [showModificarPlato, setShowModificarPlato] = useState(false);
 
   useEffect(() => {
     const setDish = () => {
-      setSelectedDish(data.find((plato) => plato.plato === dish));
+      setSelectedDish(data.find((plato) => plato.id === dish));
       setShowLoading(false);
     };
     typeof data !== "undefined" && setDish();
@@ -28,7 +30,6 @@ function ShowTestDetail({ data }) {
 
   const handleDelete = () => {
     setShowDeleteItem(true);
-   
   };
 
   const handleChangeStock = () => {
@@ -65,9 +66,13 @@ function ShowTestDetail({ data }) {
 
       <div className="w-full ">
         <div className="relative">
-        {!selectedDish?.existencia && <div className="absolute top-0 bottom-0 left-0 right-0 bg-main/80 flex">
-          <h1 className="bg-red-500 capitalize h-auto flex m-auto py-3 px-4 text-center  rounded-full ">sin stock</h1>
-          </div>}
+          {!selectedDish?.existencia && (
+            <div className="absolute top-0 bottom-0 left-0 right-0 bg-main/80 flex">
+              <h1 className="bg-red-500 capitalize h-auto flex m-auto py-3 px-4 text-center  rounded-full ">
+                sin stock
+              </h1>
+            </div>
+          )}
           <img
             className=""
             src={selectedDish?.image}
@@ -77,11 +82,10 @@ function ShowTestDetail({ data }) {
         </div>
         <div className="p-2 w-full">
           <section className="flex flex-row justify-left gap-4">
-          <h1 className="text-2xl text-left capitalize font-semibold text-text">
-            {" "}
-            {selectedDish?.plato} 
-          </h1>
-          
+            <h1 className="text-2xl text-left capitalize font-semibold text-text">
+              {" "}
+              {selectedDish?.plato}
+            </h1>
           </section>
           <div className="flex justify-left">
             <div className="rounded-full bg-gray-200 w-auto text-gray-400 px-2 py-1 text-sm">
@@ -111,10 +115,13 @@ function ShowTestDetail({ data }) {
 
           <div
             className="mt-3 p-3 border bg-violet-800 text-white mx-auto text-center text-lg rounded-full w-1/2"
-            onClick={() => handleDelete(selectedDish.id)}
+            onClick={() => setShowModificarPlato(true)}
           >
             Modificar
           </div>
+
+          {showModificarPlato && <div className="absolute top-0 bottom-0 left-0 right-0 bg-main text-white z-10" > 
+          <ModificarItem dish={selectedDish} setShowModificarPlato={setShowModificarPlato}/> </div>}
 
           <div
             className="mt-3 p-3 bg-red-800 text-white mx-auto text-center text-lg rounded-full w-1/2"

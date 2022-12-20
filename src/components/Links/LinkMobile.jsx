@@ -7,7 +7,7 @@ function LinkMobile({ dish, handlePrice }) {
     <div className={dish.existencia ? 'bg-transparent' : 'bg-gray-200'}>
       <Link
         className="hover:text-secondary/80 duration-300 "
-        to={`/${dish.plato}`}
+        to={`/${dish.id}`}
       >
         <div className="w-full rounded-md overflow-hidden relative flex">
           <div className="p-1 sm:p-0  w-2/5 min-w-[100px] h-auto sm:w-auto sm:rounded-none order-2 flex relative">
@@ -21,11 +21,10 @@ function LinkMobile({ dish, handlePrice }) {
           <div className="p-2 w-full ">
             <h1 className="text-2xl text-left capitalize font-semibold text-text">
               {" "}
-              {dish.plato}
+              <span className="mr-1 font-bold">{dish.ubicacion}.</span>{dish.plato}
               
             </h1>
-            <div className="flex justify-left"></div>
-
+           
             <h1 className="text-xl font-bold text-left capitalize text-text mt-2">
               {" "}
               {handlePrice(dish.precio)}
@@ -37,7 +36,7 @@ function LinkMobile({ dish, handlePrice }) {
               {dish.descripcion.length > 30 ? "..." : null}
             </p>
 
-            {!dish.existencia ? <div className="mt-2 rounded-full px-3 py-2 bg-gray-800 text-gray-200 text-center font-normal w-[120px]">
+            {!dish.existencia ? <div className="mt-2 rounded-full px-2 py-1 bg-gray-600 text-gray-200 text-center font-normal text-sm w-[100px]">
               <span className="">sin stock</span></div> : null}
             
           </div>

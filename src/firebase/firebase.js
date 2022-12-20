@@ -60,3 +60,21 @@ export async function modificarStock(id, newValue) {
     existencia: !newValue,
   });
 }
+
+export async function modificarItem(idItem, newValues) {
+  const {plato, image, id, categoria, existencia, descripcion, precio, ubicacion, tags} = newValues;
+  
+  const itemRef = doc(db, "platos", idItem);
+
+  await updateDoc(itemRef, {
+      plato: plato,
+      categoria: categoria,
+      ubicacion: ubicacion,
+      descripcion: descripcion,
+      precio: precio,
+      tags: tags,
+      existencia: existencia,
+      id: id,
+      image: image
+  });
+}

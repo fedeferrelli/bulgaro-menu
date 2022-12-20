@@ -20,7 +20,7 @@ function ShowItems({ categoria, dataToShow }) {
 
       <ul className="mt-4 font-bold text-xl sm:w-full sm:flex sm:flex-row sm:flex-wrap sm:gap-10 sm:justify-evenly">
         {dataToShow
-          ?.filter((dish) => dish.categoria === categoria)
+          ?.filter((dish) => dish.categoria === categoria).sort((a, b)=>a.ubicacion - b.ubicacion)
           .map((dish, i) => (
             <li key={dish.descripcion} className="mt-2">
               {viewport_width < 650 ? (
