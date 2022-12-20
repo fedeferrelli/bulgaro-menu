@@ -5,7 +5,7 @@ import {modificarStock} from '../../firebase/firebase'
 function ChangeStock({id, plato, stock, setShowChangeStock, setShowLoading}) {
 
     const handleModificarStock = (id, stock) =>{
-        //setShowLoading(true)
+        setShowLoading(true)
         modificarStock(id, stock);
         setShowChangeStock(false)
         //setShowLoading(false)

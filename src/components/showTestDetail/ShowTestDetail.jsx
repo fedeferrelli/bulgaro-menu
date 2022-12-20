@@ -58,7 +58,7 @@ function ShowTestDetail({ data }) {
             stock={selectedDish.existencia}
             plato={selectedDish.plato}
             setShowChangeStock={setShowChangeStock}
-            
+            setShowLoading={setShowLoading}
           />
         </div>
       )}
