@@ -15,6 +15,7 @@ function ShowTestDetail({ data }) {
   const [showModificarPlato, setShowModificarPlato] = useState(false);
 
   useEffect(() => {
+    
     const setDish = () => {
       setSelectedDish(data.find((plato) => plato.id === dish));
       setShowLoading(false);
@@ -121,7 +122,7 @@ function ShowTestDetail({ data }) {
           </div>
 
           {showModificarPlato && <div className="absolute top-0 bottom-0 left-0 right-0 bg-main text-white z-10" > 
-          <ModificarItem dish={selectedDish} setShowModificarPlato={setShowModificarPlato}/> </div>}
+          <ModificarItem dish={selectedDish} setShowModificarPlato={setShowModificarPlato} setShowLoading={setShowLoading}/> </div>}
 
           <div
             className="mt-3 p-3 bg-red-800 text-white mx-auto text-center text-lg rounded-full w-1/2"

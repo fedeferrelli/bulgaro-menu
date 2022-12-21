@@ -13,7 +13,7 @@ function Categories({categories}) {
               smooth={true}
               offset={-50}
               duration={1000}
-              className="px-3 py-2 shadow text-text rounded-full bg-alt_bg text-sm sm:cursor-pointer sm:hover:shadow-xl sm:duration-300"
+              className="px-3 py-2 shadow text-text rounded-full bg-alt_bg text-sm sm:cursor-pointer sm:hover:shadow-xl sm:duration-300 capitalize"
             >
               {cat}
             </LinkScroll>

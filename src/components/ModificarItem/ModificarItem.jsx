@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { fetchData } from "../../api";
 
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -12,16 +11,24 @@ import _ from "lodash";
 
 import Loading from "../Loading";
 
-const ModificarItem = ({ dish, setShowModificarPlato }) => {
+const ModificarItem = ({ dish, setShowModificarPlato, setShowLoading }) => {
+  const {
+    plato,
+    image,
+    id,
+    categoria,
+    existencia,
+    descripcion,
+    precio,
+    ubicacion,
+    tags,
+  } = dish;
 
- const {plato, image, id, categoria, existencia, descripcion, precio, ubicacion, tags} = dish;
-
- const [categories, setCategories] = useState([]) 
- const [cargandoItem, setCargandoItem] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [cargandoItem, setCargandoItem] = useState(false);
   const [urlimagen, setUrlimagen] = useState(image);
   const [errorImg, setErrorImg] = useState(false);
   const [cargandoImagen, setCargandoImagen] = useState(false);
-  const [categorias, setCategorias] = useState([]);
 
   const getCategories = async () => {
     const categoriesApi = await fetchData.fetchCategories();
@@ -35,20 +42,9 @@ const ModificarItem = ({ dish, setShowModificarPlato }) => {
   };
 
   useEffect(() => {
-   
+    
     getCategories();
   }, []);
-
-
-  // obtener datos de categorias
-
-  /* useEffect(() => {
-    const establecerCategories = () => {
-      setCategorias(categories);
-    };
-
-    categories && establecerCategories();
-  }, [categories]); */
 
   // validacion y leer datos de formulario
 
@@ -60,7 +56,7 @@ const ModificarItem = ({ dish, setShowModificarPlato }) => {
       descripcion: descripcion,
       precio: precio,
       tags: tags,
-      image: image
+      image: image,
     },
 
     validationSchema: Yup.object({
@@ -89,9 +85,9 @@ const ModificarItem = ({ dish, setShowModificarPlato }) => {
       try {
         if (urlimagen) {
           plato.image = urlimagen;
-          plato.existencia= existencia;
+          plato.existencia = existencia;
           plato.id = id;
-          //setCargandoItem(true)
+
           uploadData(id, plato);
           formik.resetForm();
         } else setErrorImg(true);
@@ -102,10 +98,7 @@ const ModificarItem = ({ dish, setShowModificarPlato }) => {
   });
 
   const uploadData = async (id, data) => {
-    
     await modificarItem(id, data);
-    setCargandoItem(false)
-    console.log(cargandoItem)
     setShowModificarPlato(false);
   };
 

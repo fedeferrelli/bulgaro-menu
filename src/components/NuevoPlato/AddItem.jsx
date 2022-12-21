@@ -85,10 +85,8 @@ const AddItem = ({ categories }) => {
 
   const uploadData = async (data) => {
     
-    console.log(cargandoItem)
     await setItem(data);
     setCargandoItem(false)
-    console.log(cargandoItem)
     navigate("/");
   };
 

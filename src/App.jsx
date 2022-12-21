@@ -1,29 +1,29 @@
 import { useState, useEffect } from "react";
-import { doc, onSnapshot, collection } from "firebase/firestore";
-import {db} from './firebase/firebase'
+import { onSnapshot, collection } from "firebase/firestore";
+import { db } from "./firebase/firebase";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 
 import { fetchData } from "./api";
 
 import Links from "./components/Links/Links";
 import ShowTestDetail from "./components/showTestDetail/ShowTestDetail";
-import AddItem from './components/NuevoPlato/AddItem'
+import AddItem from "./components/NuevoPlato/AddItem";
+import CategoriasAdmin from "./components/Categorias/CategoriasAdmin";
+import AddCat from "./components/Categorias/AddCat";
 
 function App() {
   const [data, setData] = useState();
   const [categories, setCategoies] = useState();
 
   const getData = async () => {
+    onSnapshot(collection(db, "platos"), (querySnapshot) => {
+      let cities = [];
+      querySnapshot.forEach((doc) => {
+        cities.push(doc.data());
+      });
 
-   onSnapshot(collection(db, "platos"), (querySnapshot) => {
-      let cities = []
-        querySnapshot.forEach((doc) => {
-          cities.push(doc.data());
-        });
-        
-       setData(cities)
-    
-    })
+      setData(cities);
+    });
   };
 
   const getCategories = async () => {
@@ -57,7 +57,17 @@ function App() {
             <Route path="/:dish" element={<ShowTestDetail data={data} />} />
             <Route
               path="/add_plato"
-              element={<AddItem categories={categories}/>}
+              element={<AddItem categories={categories} />}
+            />
+
+            <Route
+              path="/categorias"
+              element={<CategoriasAdmin categories={categories} />}
+            />
+
+            <Route
+              path="/add_cat"
+              element={<AddCat categories={categories} />}
             />
           </Routes>
         </Router>{" "}

@@ -78,3 +78,11 @@ export async function modificarItem(idItem, newValues) {
       image: image
   });
 }
+
+export async function setCat(item) {
+  await setDoc(doc(db, "categorias", item.id), item);
+}
+
+export async function eliminarCategoria(id) {
+  await deleteDoc(doc(db, "categorias", id));
+}

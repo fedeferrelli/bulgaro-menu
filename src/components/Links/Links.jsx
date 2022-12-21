@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import Loading from "../Loading";
 import Search from "./Search";
@@ -41,6 +42,9 @@ function Links({ data, categories }) {
     </>
   ) : (
     <div className="py-4 pb-20 flex flex-col gap-4 bg-main max-w-[1200px] m-auto px-1 w-full min-h-screen">
+      
+      <Link to='/categorias' className="px-3 py-2 border border-white rounded-full text-text w-auto"> ir a Administrar Categorías </Link>
+      
       <Search setSearch={setSearch} />
 
       <Categories categories={categoriesToShow} />
