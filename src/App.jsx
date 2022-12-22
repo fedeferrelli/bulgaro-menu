@@ -41,7 +41,7 @@ function App() {
       setCategories(
         cats
           .sort((a, b) => {
-            return +a.posicion > +b.posicion ? 1 : -1;
+            return +a.ubicacion > +b.ubicacion ? 1 : -1;
           })
           .map((cat) => cat.nueva_categoria)
       );
