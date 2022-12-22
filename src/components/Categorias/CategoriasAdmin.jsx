@@ -5,14 +5,20 @@ import Loading from "../Loading";
 import DeleteCat from "./DeleteCat";
 import AddCatButton from "./AddCatButton";
 import ShowCat from "./ShowCat";
+import ModificarCat from "../Modificar/ModificarCat";
 
 function CategoriasAdmin() {
-    
   const [categories, setCategories] = useState();
   const [showLoading, setShowLoading] = useState(true);
+  
   const [showDeleteCat, setShowDeleteCat] = useState(false);
   const [categoriaToDelete, setCategoriaToDelete] = useState();
-  const [idToDelete, setIdToDelete] = useState()
+  const [idToDelete, setIdToDelete] = useState();
+
+  const [showModificarCat, setShowModificarCat] = useState(false);
+  const [categoriaToModificar, setCategoriaToModificar] = useState();
+  const [idToModificar, setIdToModificar] = useState();
+  const [ubicacionModificar, setUbicacionToModificar] = useState();
 
   const getCategorieData = async () => {
     onSnapshot(collection(db, "categorias"), (querySnapshot) => {
@@ -21,7 +27,7 @@ function CategoriasAdmin() {
         cats.push(doc.data());
       });
 
-      setCategories(cats.sort((a, b) => a.posicion - b.posicion));
+      setCategories(cats.sort((a, b) => a.ubicacion - b.ubicacion));
       setShowLoading(false);
     });
   };
@@ -29,8 +35,6 @@ function CategoriasAdmin() {
   useEffect(() => {
     getCategorieData();
   }, []);
-
-  console.log(categories);
 
   return showLoading ? (
     <>
@@ -43,48 +47,40 @@ function CategoriasAdmin() {
       </h1>
 
       {categories?.map((cat) => (
-          <div key={cat.nueva_categoria}>
-          <ShowCat cat={cat} setShowDeleteCat={setShowDeleteCat}
-          setCategoriaToDelete={setCategoriaToDelete}
-          setIdToDelete={setIdToDelete}/>
-          </div>
-      ))}
-      {/* /*   <div
-          key={cat.nueva_categoria + cat.ubicacion}
-          className="flex flex-row justify-between w-full px-2 py-3 mt-2 rounded-md bg-gray-200"
-        >
-          <div className=" font-semibold capitalize">
-            {cat.ubicacion} {cat.nueva_categoria}
-          </div>
+        <div key={cat.id}>
+          <ShowCat
+            cat={cat}
 
-          <section className="flex flex-row gap-2">
-            <div className="w-8 h-8 rounded-full bg-blue-500/70 flex">
-              <div className="m-auto font-bold">
-                <BiDotsHorizontalRounded />
-              </div>
-            </div>
+            setShowDeleteCat={setShowDeleteCat}
+            setCategoriaToDelete={setCategoriaToDelete}
+            setIdToDelete={setIdToDelete}
 
-            <div
-              className="w-8 h-8 rounded-full bg-gray-500/70 flex"
-              onClick={() => setShowDeleteCat(true)}
-            >
-              <div className="m-auto font-bold">
-                <AiOutlineDelete />
-              </div>
-            </div>
-          </section>
+            setShowModificarCat={setShowModificarCat}
+            setCategoriaToModificar={setCategoriaToModificar}
+            setIdToModificar={setIdToModificar}
+            setUbicacionToModificar={setUbicacionToModificar}
+          />
         </div>
-      */}
-    
+      ))}
 
       {showDeleteCat && (
-        <div className="absolute top-0 bottom-0 left-0 right-0 bg-main/80 z-20 flex">
+        <div className="absolute top-0 bottom-0 left-0 right-0 bg-main/80 z-20 flex min-h-screen mt-14">
           <DeleteCat
             id={idToDelete}
             categoria={categoriaToDelete}
             setShowDeleteCat={setShowDeleteCat}
           />
-          fede
+        </div>
+      )}
+
+{showModificarCat && (
+        <div className="absolute top-0 bottom-0 left-0 right-0 bg-main/80 z-20 flex min-h-screen mt-14">
+          <ModificarCat
+            id={idToModificar}
+            categoria={categoriaToModificar}
+            ubicacion={ubicacionModificar}
+            setShowModificarCat={setShowModificarCat}
+          />
         </div>
       )}
 

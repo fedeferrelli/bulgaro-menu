@@ -86,3 +86,14 @@ export async function setCat(item) {
 export async function eliminarCategoria(id) {
   await deleteDoc(doc(db, "categorias", id));
 }
+
+export async function modificarCategoria(idItem, newValue) {
+  
+  const itemRef = doc(db, "categorias", idItem);
+
+  await updateDoc(itemRef, 
+      
+      newValue
+      
+  );
+}
