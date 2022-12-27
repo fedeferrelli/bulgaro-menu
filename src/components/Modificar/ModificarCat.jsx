@@ -136,7 +136,7 @@ const ModificarCat = ({ id, categoria, ubicacion, setShowModificarCat }) => {
                         <input
               type="submit"
               className=" w-full h-12 rounded-full px-6 py-2 mt-8 bg-green-700 font-bold uppercase text-white hover:bg-green-800 cursor-pointer"
-              value="modificar plato"
+              value="modificar categoria"
             />
 
             <button
