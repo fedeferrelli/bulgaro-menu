@@ -123,7 +123,7 @@ const ModificarItem = ({ dish, setShowModificarPlato, setShowLoading }) => {
       <h1 className="font-bold px-8 pt-6 w-full text-center text-text tracking-wider text-xl">
         <span className="text-2xl block uppercase text-white">
           {" "}
-          nuevo plato
+          modificar plato
         </span>
       </h1>
 
